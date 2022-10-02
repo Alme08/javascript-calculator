@@ -1,12 +1,13 @@
 const numbers = document.querySelectorAll('.number');
-const operators = document.querySelectorAll('.operator')
+const operators = document.querySelectorAll('.operator');
+const methods = document.querySelectorAll('.method')
 const screen = document.querySelector('.screen');
 
 const calculator = {
     firstNumber: 0,
     secondNumber: undefined,
     operator: undefined,
-    equalPressed: false
+    equalPressed: false,
 }
 
 numbers.forEach(number => number.addEventListener('click', e=>{
@@ -54,6 +55,17 @@ operators.forEach(operator => operator.addEventListener('click', e=>{
 
     calculator.equalPressed = false
 }));
+
+methods.forEach(method => method.addEventListener('click', e=>{
+    if(e.target.dataset.method === 'C'){
+        console.log('si');
+        calculator.firstNumber = 0;
+        screen.textContent = calculator.firstNumber
+        calculator.secondNumber = undefined;
+        calculator.operator = undefined;
+        calculator.equalPressed = false;
+    }
+}))
 
 const operate = (a, b, operator) =>{
     if (b === 0 && operator === 'div') return 'XD'
