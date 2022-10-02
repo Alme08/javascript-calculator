@@ -8,6 +8,7 @@ const calculator = {
     secondNumber: undefined,
     operator: undefined,
     equalPressed: false,
+    dot: false
 }
 
 numbers.forEach(number => number.addEventListener('click', e=>{
@@ -19,11 +20,11 @@ numbers.forEach(number => number.addEventListener('click', e=>{
 
 
         if (calculator.operator === undefined) {
-            screen.textContent = (calculator.firstNumber === 0)? e.target.dataset.key : screen.textContent + e.target.dataset.key
-            calculator.firstNumber = parseInt(screen.textContent)    
+            screen.textContent = (calculator.firstNumber === 0 && calculator.dot == false)? e.target.dataset.key : screen.textContent + e.target.dataset.key
+            calculator.firstNumber = parseFloat(screen.textContent)    
         }else{
-            screen.textContent = (calculator.secondNumber === undefined)? e.target.dataset.key : screen.textContent + e.target.dataset.key
-            calculator.secondNumber = parseInt(screen.textContent) 
+            screen.textContent = (calculator.secondNumber === undefined && calculator.dot == false)? e.target.dataset.key : screen.textContent + e.target.dataset.key
+            calculator.secondNumber = parseFloat(screen.textContent) 
         }
     
     console.log(e.target.dataset.key);
@@ -36,10 +37,11 @@ operators.forEach(operator => operator.addEventListener('click', e=>{
         operation = (operation.length > 15)? operation.slice(0, 15) : operation;
 
         screen.textContent = operation;
-        calculator.firstNumber = parseInt(screen.textContent);
+        calculator.firstNumber = parseFloat(screen.textContent);
         calculator.secondNumber = undefined;
         calculator.operator = undefined;
         calculator.equalPressed = true;
+        calculator.dot = false;
         return;
 
     }else if(calculator.operator !== undefined){
@@ -49,8 +51,10 @@ operators.forEach(operator => operator.addEventListener('click', e=>{
         calculator.firstNumber = parseInt(screen.textContent)
         calculator.secondNumber = undefined;
         calculator.operator = e.target.dataset.operator
+        calculator.dot = false;
     }else{
         calculator.operator = e.target.dataset.operator
+        calculator.dot = false;
     }
 
     calculator.equalPressed = false
@@ -64,6 +68,15 @@ methods.forEach(method => method.addEventListener('click', e=>{
         calculator.secondNumber = undefined;
         calculator.operator = undefined;
         calculator.equalPressed = false;
+        calculator.dot = false
+    }else if(e.target.dataset.method === 'dot'){
+        if(!screen.textContent.includes('.')){
+            calculator.dot = true;
+            screen.textContent += '.'
+            calculator.firstNumber = parseFloat(screen.textContent);
+        }
+    }else if(e.target.dataset.method === 'percentage'){
+        screen.textContent = parseFloat(screen.textContent/100);
     }
 }))
 
