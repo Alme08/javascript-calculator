@@ -107,8 +107,6 @@ window.addEventListener('keyup', e=>{
         (e.key === '.')? methodsFunction('dot') :
         (e.key === '%')? methodsFunction('percentage') : methodsFunction('del')
     }
-    
-    console.log(e.key);
 })
 
 numbers.forEach(number => number.addEventListener('click', e=> numbersFunction(e.target.dataset.key) ));
